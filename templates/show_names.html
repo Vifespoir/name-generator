@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+{% block body %}
+<!-- <link rel=stylesheet type=text/css href="allison-style.css"> -->
+<!-- <link href="jquery-ui-slider.css" rel="stylesheet"> -->
+<script src="jquery.js"></script>
+<script src="jquery-ui.js"></script>
+<script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'Ubuntu:400,300,500,700,300italic,400italic,500italic,700italic:latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })(); </script>
+
+<!-- Javascript -->
+<script>
+   $(function() {
+      $( "#slider-3" ).slider({
+         range:true,
+         min: 10,
+         max: 100,
+         values: [ 35, 60 ],
+         slide: function( event, ui ) {
+            $( "#age" ).val( ui.values[ 0 ] + " yrs"
+            + " - " + ui.values[ 1 ]+ " yrs" );
+         }
+     });
+   $( "#age" ).val($( "#slider-3" ).slider( "values", 0 ) +
+      " yrs - " + $( "#slider-3" ).slider( "values", 1 ) + " yrs" );
+   });
+</script>
+
+  <form action="{{ url_for('generate_names') }}" method=post class=name-generator>
+    <table>
+      <tr>
+        <td> How many names do you want to generate? </td>
+        <td> <input name=amount size=30 type=number placeholder="between 1...500"> </td>
+      </tr>
+      <tr>
+        <td> In which age range? </td>
+
+        <td>
+          <!-- HTML -->
+          <p>
+             <input type="text" id="age" class="slider-result">
+          </p>
+          <div id="slider-3"></div>
+        </td>
+        </tr>
+      <tr>
+        <td> Turn on for last names to be all-caps: </td>
+        <td>
+          <!-- Rounded switch -->
+          <label class="switch">
+          <input name=lastUPPER  type="checkbox">
+          <div class="slider round"></div>
+          </label>
+        </td>
+      </tr>
+      <tr class="centered">
+        <td> <input class="btn" type=submit value=Share> </td>
+      </tr>
+    </table>
+  </form>
+  <ul class=names>
+  {% for name in names %}
+    <li><h2>{{ name[0] }} {{ name[1] }}</h2>
+  {% else %}
+    <li><em>Unbelievable.  No name generated here so far</em>
+  {% endfor %}
+  </ul>
+{% endblock %}
