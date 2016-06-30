@@ -141,10 +141,17 @@ def show_names():
 def generate_names():
     """Generate French names."""
     init_names()
+    print(request.form)
     amount = int(request.form['amount'])
-    ageL = int(request.form['ageL'])
-    ageH = int(request.form['ageH'])
-    lastUPPER = request.form['lastUPPER']
+    age = request.form['age'].split(' - ')
+
+    try:
+        lastUPPER = request.form['lastUPPER']
+        lastUPPER = True
+    except:
+        lastUPPER = False
+
+    ageL, ageH = int(age[0][:-4]), int(age[1][:-4])
     names = generate_name_combo(amount, ageL, ageH, lastUPPER)
     db = get_db()
 
