@@ -6,6 +6,11 @@ import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
 from french_name_generator.main import generate_name_combo
+import logging
+
+logging.basicConfig(
+    level=logging.DEBUG, format=' %(asctime)s - %(levelname)s - %(message)s')
+
 
 # create our little application :)
 app = Flask(__name__)
@@ -141,26 +146,39 @@ def show_names():
 def generate_names():
     """Generate French names."""
     init_names()
-    print(request.form)
-    amount = int(request.form['amount'])
+    logging.debug("generate_names elements posted: %s" % request.form)
+
     age = request.form['age'].split(' - ')
+    ageL, ageH = int(age[0][:-4]), int(age[1][:-4])
+
+    logging.debug("generate_names ages: {} - {}".format(ageL, ageH))
 
     try:
-        lastUPPER = request.form['lastUPPER']
+        request.form['lastUPPER']
         lastUPPER = True
-    except:
+    except Exception as e:
+        logging.debug("generate_names lastUPPER error: %s" % e)
         lastUPPER = False
+    logging.debug("generate_names last name upper: %s" % lastUPPER)
 
-    ageL, ageH = int(age[0][:-4]), int(age[1][:-4])
-    names = generate_name_combo(amount, ageL, ageH, lastUPPER)
-    db = get_db()
+    if request.form['amount']:
+        amount = int(request.form['amount'])
+        names = generate_name_combo(amount=amount, ageL=ageL, ageH=ageH,
+                                    lastUPPER=lastUPPER)
 
-    for name in names:
-        db.execute('insert into query (firstname, lastname) values (?, ?)',
-                   [name[0], name[1]])
-        db.commit()
+        db = get_db()
+        for name in names:
+            db.execute('insert into query (firstname, lastname) values (?, ?)',
+                       [name[0], name[1]])
+            db.commit()
 
-    flash('New names were successfully generated')
+        flash('New names were successfully generated')
+    else:
+        amount = 0
+        flash('Please enter a valid amount of name to generate')
+
+    logging.debug("generate_names amount: %s" % amount)
+
     return redirect(url_for('show_names'))
 
 
