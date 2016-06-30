@@ -31,7 +31,7 @@ def filtering_names(names, ageL, ageH, threshold=500):
         if names[name]['stats'] is None:
             namesCopy.pop(name)
         else:
-            for stat in names[name]['stats'][-(ageH+yDelta):-(ageL+yDelta)]:
+            for stat in names[name]['stats'][-(ageH+yDelta)-1:-(ageL+yDelta)]:
                 if int(stat[1]) > threshold:
                     popular = True
 
@@ -120,4 +120,5 @@ if __name__ == '__main__':
     gender_equality = True
     names = generate_name_combo(amount, ageL, ageH, gender_equality, lastUPPER)
 
-    for name in names: print(name)
+    for name in names:
+        print(name)
