@@ -1,9 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
-<!-- <link rel=stylesheet type=text/css href="allison-style.css"> -->
-<!-- <link href="jquery-ui-slider.css" rel="stylesheet"> -->
-<script src="jquery.js"></script>
-<script src="jquery-ui.js"></script>
+<!-- Special fonts-- >
 <script type="text/javascript">
   WebFontConfig = {
     google: { families: [ 'Ubuntu:400,300,500,700,300italic,400italic,500italic,700italic:latin' ] }
@@ -17,7 +14,7 @@
     s.parentNode.insertBefore(wf, s);
   })(); </script>
 
-<!-- Javascript -->
+<!-- Slider bar -->
 <script>
    $(function() {
       $( "#slider-3" ).slider({
@@ -30,8 +27,8 @@
             + " - " + ui.values[ 1 ]+ " yrs" );
          }
      });
-     $( "#age" ).val($( "#slider-3" ).slider( "values", 0 ) +
-        " yrs - " + $( "#slider-3" ).slider( "values", 1 ) + " yrs" );
+   $( "#age" ).val($( "#slider-3" ).slider( "values", 0 ) +
+      " yrs - " + $( "#slider-3" ).slider( "values", 1 ) + " yrs" );
    });
 </script>
 
@@ -43,7 +40,6 @@
       </tr>
       <tr>
         <td> In which age range? </td>
-
         <td>
           <!-- HTML -->
           <p>
@@ -51,22 +47,25 @@
           </p>
           <div id="slider-3"></div>
         </td>
-        </tr>
+      </tr>
       <tr>
         <td> Turn on for last names to be all-caps: </td>
         <td>
           <!-- Rounded switch -->
           <label class="switch">
           <input name=lastUPPER id="aria-expanded" value="off" type="checkbox">
-          <div class="slider round"></div>
+            <div class="slider round"></div>
           </label>
         </td>
       </tr>
-      <tr class="centered">
-        <td> <input class="btn" type=submit value=Share> </td>
-      </tr>
     </table>
+
+    <div class="centered">
+      <input class="btn" type=submit value=Share>
+    </div>
+
   </form>
+
   <ul class=names>
   {% for name in names %}
     <li><h2>{{ name[0] }} {{ name[1] }}</h2>

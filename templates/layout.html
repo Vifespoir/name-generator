@@ -1,26 +1,36 @@
 <!doctype html>
-<title>Name Generator</title>
-<!-- <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}"> -->
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='allison-style.css') }}">
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='jquery-ui-slider.css') }}">
+<head>
+  <title>French Name Generator</title>
+  <!-- <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}"> -->
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='allison-style.css') }}">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='jquery-ui-slider.css') }}">
 
-<script src="{{ url_for('static', filename='jquery.js') }}"></script>
-<script src="{{ url_for('static', filename='jquery-ui.js') }}"></script>
+  <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='jquery-ui.min.js') }}"></script>
+</head>
+  <body>
+  <!-- <link rel=stylesheet type=text/css href="allison-style.css"> -->
+  <div class=page>
+    <h1>French Name Generator</h1>
+    <div class=nav>
+      <!-- <div class=metanav>
+        {% if not session.logged_in %}
+          <a class="sideMargins" href="{{ url_for('login') }}">log in</a>
+        {% else %}
+          <a class="sideMargins" href="{{ url_for('logout') }}">log out</a>
+        {% endif %}
+      </div> -->
 
-<!-- <link rel=stylesheet type=text/css href="allison-style.css"> -->
-<div class=page>
-  <h1>Name Generator</h1>
-  <div class=nav>
-    <a href="{{ url_for('show_names') }}">Generate names!</a>
-  <div class=metanav>
-  {% if not session.logged_in %}
-    <a href="{{ url_for('login') }}">log in</a>
-  {% else %}
-    <a href="{{ url_for('logout') }}">log out</a>
-  {% endif %}
+
+      <a id="showGeneratorLink" href="{{ url_for('show_names') }}">
+        <h2>Generate names based on age range given.</h2>
+      </a>
+
+
+
+      {% for message in get_flashed_messages() %}
+      <div class=flash>{{ message }}</div>
+      {% endfor %}
+      {% block body %}{% endblock %}
   </div>
-  {% for message in get_flashed_messages() %}
-    <div class=flash>{{ message }}</div>
-  {% endfor %}
-  {% block body %}{% endblock %}
-</div>
+</body>
