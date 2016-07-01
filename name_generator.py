@@ -141,6 +141,7 @@ def show_names():
 def generate_names():
     """Generate French names."""
     init_names()
+
     amount = int(request.form['amount'])
     ageL = int(request.form['ageL'])
     ageH = int(request.form['ageH'])
