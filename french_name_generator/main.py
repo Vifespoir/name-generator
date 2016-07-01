@@ -31,7 +31,7 @@ def filtering_names(names, ageL, ageH, threshold=500):
         if names[name]['stats'] is None:
             namesCopy.pop(name)
         else:
-            for stat in names[name]['stats'][-(ageH+yDelta):-(ageL+yDelta)]:
+            for stat in names[name]['stats'][-(ageH+yDelta)-1:-(ageL+yDelta)]:
                 if int(stat[1]) > threshold:
                     popular = True
 
@@ -42,8 +42,8 @@ def filtering_names(names, ageL, ageH, threshold=500):
     return namesCopy
 
 
-def generate_name_combo(amount, ageL, ageH, gender_equality=False,
-                        lastUPPER=True):
+def generate_name_combo(amount, ageL, ageH, lastUPPER=True,
+                        gender_equality=False):
     """Generate pseudo random name combos."""
     logging.debug("generate_name_combo Started")
     firstNamesD = loading_names('First Names').load_log()
@@ -120,4 +120,5 @@ if __name__ == '__main__':
     gender_equality = True
     names = generate_name_combo(amount, ageL, ageH, gender_equality, lastUPPER)
 
-    for name in names: print(name)
+    for name in names:
+        print(name)

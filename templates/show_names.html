@@ -36,16 +36,14 @@
     <table>
       <tr>
         <td> How many names do you want to generate? </td>
-        <td>
-          <input name=amount size=30 type=number placeholder="between 1...500">
-        </td>
+        <td> <input name=amount size=30 type=number placeholder="between 1...100" min=1 max=100> </td>
       </tr>
       <tr>
         <td> In which age range? </td>
         <td>
           <!-- HTML -->
           <p>
-             <input type="text" id="age" name=age class="slider-result">
+             <input type="text" name="age" id="age" class="slider-result">
           </p>
           <div id="slider-3"></div>
         </td>
@@ -55,7 +53,7 @@
         <td>
           <!-- Rounded switch -->
           <label class="switch">
-            <input name=lastUPPER  type="checkbox">
+          <input name=lastUPPER id="aria-expanded" value="off" type="checkbox">
             <div class="slider round"></div>
           </label>
         </td>
