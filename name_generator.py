@@ -7,6 +7,7 @@ from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
 from french_name_generator.main import generate_name_combo
 import logging
+from secret import SECRET_KEY
 
 logging.basicConfig(
     level=logging.DEBUG, format=' %(asctime)s - %(levelname)s - %(message)s')
@@ -19,8 +20,7 @@ app.config.from_object(__name__)
 # Load default config and override config from an environment variable
 app.config.update(dict(
     DATABASE=os.path.join(app.root_path, 'name_generator.db'),
-    SECRET_KEY='cGtJLA6a7we46CA9Vk5abTwkjSKd8eY0hzjGs/TTet1BKx88Jzswrk+AH5jtJb\
-                k3LAOP4PWGUQ+uxjIj4f25Bw==',
+    SECRET_KEY=SECRET_KEY,
     USERNAME='admin',
     PASSWORD='default'
 ))
