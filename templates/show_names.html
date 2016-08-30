@@ -1,5 +1,5 @@
-{% extends "layout.html" %}
-{% block body %}
+{% extends "show_entries.html" %}
+{% block request %}
 <!-- Special fonts-- >
 <script type="text/javascript">
   WebFontConfig = {
@@ -63,14 +63,5 @@
     <div class="centered">
       <input class="btn" type=submit value=Share>
     </div>
-
   </form>
-
-  <ul class=names>
-  {% for name in names %}
-    <li><h2>{{ name[0] }} {{ name[1] }}</h2>
-  {% else %}
-    <li><em>Unbelievable.  No name generated here so far</em>
-  {% endfor %}
-  </ul>
 {% endblock %}

@@ -1,4 +1,4 @@
 from name_generator import app
 
 if __name__ == "__main__":
-    app.run(debug=1)
+    app.run()

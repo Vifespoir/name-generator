@@ -1,0 +1,7 @@
+lib/
+bin/
+include/
+name_generator.db
+__pycache__/
+french_name_generator/__pycache__/
+

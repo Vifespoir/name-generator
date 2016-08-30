@@ -60,6 +60,18 @@ def get_db():
     return g.sqlite_db
 
 
+def init_names():
+    """Open a new database connection.
+
+    Check if there is none yet for the
+    current application context.
+    """
+    db = get_db()
+    with app.open_resource('names.sql', mode='r') as f:
+        db.cursor().executescript(f.read())
+        db.commit()
+
+
 @app.teardown_appcontext
 def close_db(error):
     """Close the database again at the end of the request."""
@@ -74,55 +86,6 @@ def show_entries():
     cur = db.execute('select title, text from entries order by id desc')
     entries = cur.fetchall()
     return render_template('show_entries.html', entries=entries)
-
-
-@app.route('/add', methods=['POST'])
-def add_entry():
-    """Allow the creation to entry in the database."""
-    if not session.get('logged_in'):
-        abort(401)
-    db = get_db()
-    db.execute('insert into entries (title, text) values (?, ?)',
-               [request.form['title'], request.form['text']])
-    db.commit()
-    flash('New entry was successfully posted')
-    return redirect(url_for('show_entries'))
-
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    """Log the user in."""
-    error = None
-    if request.method == 'POST':
-        if request.form['username'] != app.config['USERNAME']:
-            error = 'Invalid username'
-        elif request.form['password'] != app.config['PASSWORD']:
-            error = 'Invalid password'
-        else:
-            session['logged_in'] = True
-            flash('You were logged in')
-            return redirect(url_for('show_entries'))
-    return render_template('login.html', error=error)
-
-
-@app.route('/logout')
-def logout():
-    """Log the user out."""
-    session.pop('logged_in', None)
-    flash('You were logged out')
-    return redirect(url_for('show_entries'))
-
-
-def init_names():
-    """Open a new database connection.
-
-    Check if there is none yet for the
-    current application context.
-    """
-    db = get_db()
-    with app.open_resource('names.sql', mode='r') as f:
-        db.cursor().executescript(f.read())
-    db.commit()
 
 
 @app.route('/fr/names')
