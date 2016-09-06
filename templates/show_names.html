@@ -1,67 +1,37 @@
-{% extends "show_entries.html" %}
+{% extends "home.html" %}
+{% block body %}
+
 {% block request %}
-<!-- Special fonts-- >
-<script type="text/javascript">
-  WebFontConfig = {
-    google: { families: [ 'Ubuntu:400,300,500,700,300italic,400italic,500italic,700italic:latin' ] }
-  };
-  (function() {
-    var wf = document.createElement('script');
-    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-    wf.type = 'text/javascript';
-    wf.async = 'true';
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(wf, s);
-  })(); </script>
+{% endblock request %}
 
-<!-- Slider bar -->
-<script>
-   $(function() {
-      $( "#slider-3" ).slider({
-         range:true,
-         min: 10,
-         max: 100,
-         values: [ 35, 60 ],
-         slide: function( event, ui ) {
-            $( "#age" ).val( ui.values[ 0 ] + " yrs"
-            + " - " + ui.values[ 1 ]+ " yrs" );
-         }
-     });
-   $( "#age" ).val($( "#slider-3" ).slider( "values", 0 ) +
-      " yrs - " + $( "#slider-3" ).slider( "values", 1 ) + " yrs" );
-   });
-</script>
-
-  <form action="{{ url_for('generate_names') }}" method=post class=name-generator>
-    <table>
+<div class="container">
+  <div class="panel panel-default">
+  {% for name in session['names'] %}
+    {% if loop.first %}
+    <table class="table table-striped">
       <tr>
-        <td> How many names do you want to generate? </td>
-        <td> <input name=amount size=30 type=number placeholder="between 1...100" min=1 max=100> </td>
+        <th>First Name</th>
+        <th>Last Name</th>
       </tr>
       <tr>
-        <td> In which age range? </td>
-        <td>
-          <!-- HTML -->
-          <p>
-             <input type="text" name="age" id="age" class="slider-result">
-          </p>
-          <div id="slider-3"></div>
-        </td>
+        <td>{{ name[0] }}</td>
+        <td>{{ name[1] }}</td>
       </tr>
+    {% elif loop.last %}
       <tr>
-        <td> Turn on for last names to be all-caps: </td>
-        <td>
-          <!-- Rounded switch -->
-          <label class="switch">
-          <input name=lastUPPER id="aria-expanded" value="off" type="checkbox">
-            <div class="slider round"></div>
-          </label>
-        </td>
+        <td>{{ name[0] }}</td>
+        <td>{{ name[1] }}</td>
       </tr>
     </table>
-
-    <div class="centered">
-      <input class="btn" type=submit value=Share>
-    </div>
-  </form>
-{% endblock %}
+    {% else %}
+      <tr>
+        <td>{{ name[0] }}</td>
+        <td>{{ name[1] }}</td>
+      </tr>
+    {% endif %}
+  {% else %}
+    <em>Unbelievable. No name generated here so far...</em>
+  {% endfor %}
+  </div>
+</div>
+{% endblock body %}

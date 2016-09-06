@@ -3,8 +3,7 @@
 # all the imports
 import os
 import sqlite3
-from flask import Flask, request, session, g, redirect, url_for, abort, \
-     render_template, flash
+from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
 from french_name_generator.main import generate_name_combo
 import logging
 from secret import SECRET_KEY
@@ -80,70 +79,89 @@ def close_db(error):
 
 
 @app.route('/')
-def show_entries():
+def redirect_to_names():
     """Display entries from the database."""
-    db = get_db()
-    cur = db.execute('select title, text from entries order by id desc')
-    entries = cur.fetchall()
-    return render_template('show_entries.html', entries=entries)
+    return redirect(url_for('show_names'))
 
 
-@app.route('/fr/names')
+@app.route('/fr/names', methods=['GET', 'POST'])
 def show_names():
     """Display generated names."""
     db = get_db()
+
+    try:
+        flash('Last request: {} names generated, from {} to {} years-old.'.format(
+            session['number'], session['ageL'], session['ageH']))
+    except KeyError:
+        pass
+
     names = []
     try:
         cur = db.execute('select firstname, lastname from query order by id desc')
         namesDB = cur.fetchall()
+    except sqlite3.OperationalError:
+        pass
+
+    if namesDB:
         for name in namesDB:
             name = (name['firstname'], name['lastname'])
             names.append(name)
+
+    try:
+        cur = db.execute('select number, ageL, ageH from info order by id desc')
+        infoDB = cur.fetchall()
     except sqlite3.OperationalError:
-        names = []
+        infoDB = []
 
-    return render_template('show_names.html', names=names)
+    if infoDB:
+        number, ageL, ageH = infoDB['number'], infoDB['ageL'], infoDB['ageH']
+        session.update(dict(names=names, number=number, ageL=ageL, ageH=ageH))
+
+    return render_template('show_names.html')
 
 
-@app.route('/fr/names/generate', methods=['POST'])
+@app.route('/fr/names/generate', methods=['GET', 'POST'])
 def generate_names():
     """Generate French names."""
     init_names()
-    logging.debug("generate_names elements posted: %s" % request.form)
 
-    age = request.form['age'].split(' - ')
-    ageL, ageH = int(age[0][:-4]), int(age[1][:-4])
+    if request.method == 'POST':
+        logging.debug("Generate_names elements posted: %s" % request.form)
 
-    logging.debug("generate_names ages: {} - {}".format(ageL, ageH))
+        age = request.form['age'].split(' - ')
+        ageL, ageH = int(age[0][:-4]), int(age[1][:-4])
 
-    try:
-        request.form['lastUPPER']
-        lastUPPER = True
-    except Exception as e:
-        logging.debug("generate_names lastUPPER error: %s" % e)
-        lastUPPER = False
-    logging.debug("generate_names last name upper: %s" % lastUPPER)
+        logging.debug("generate_names ages: {} - {}".format(ageL, ageH))
 
-    if request.form['amount']:
-        amount = int(request.form['amount'])
-        names = generate_name_combo(amount=amount, ageL=ageL, ageH=ageH,
-                                    lastUPPER=lastUPPER)
+        try:
+            request.form['lastUPPER']
+            lastUPPER = True
+        except Exception as e:
+            logging.debug("generate_names lastUPPER error: %s" % e)
+            lastUPPER = False
+        logging.debug("generate_names last name upper: %s" % lastUPPER)
 
-        db = get_db()
-        for name in names:
-            db.execute('insert into query (firstname, lastname) values (?, ?)',
-                       [name[0], name[1]])
-            db.commit()
+        if request.form['amount']:
+            amount = int(request.form['amount'])
+            names = generate_name_combo(amount=amount, ageL=ageL, ageH=ageH,
+                                        lastUPPER=lastUPPER)
 
-        flash('New names were successfully generated')
-    else:
-        amount = 0
-        flash('Please enter a valid amount of name to generate')
+            db = get_db()
+            logging.debug("generate_names amount: %s" % amount)
+            for name in names:
+                db.execute('insert into query (firstname, lastname) values (?, ?)',
+                           [name[0], name[1]])
+                db.commit()
 
-    logging.debug("generate_names amount: %s" % amount)
+            flash('New names were successfully generated')
+            session.update(dict(number=amount, ageL=ageL, ageH=ageH, names=names))
 
-    return redirect(url_for('show_names'))
+        else:
+            amount = 0
+            flash('Please enter a valid amount of name to generate')
+
+    return render_template('request.html')
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', debug=1)
