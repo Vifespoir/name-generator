@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div class=jumbotron>
+  <h1>French Name Generator</h1>
+  <div class=nav>
+    <a id="showGeneratorLink" href="{{ url_for('generate_names') }}">
+      <h2>Generate names based on age range given.</h2>
+    </a>
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-success" role="alert">{{ message }}</div>
+    {% endfor %}
+    {% block body %}
+    {% endblock %}
+  </div>
+</div>
+{% endblock %}

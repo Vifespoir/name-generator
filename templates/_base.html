@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <title>Machine Learning Application</title>
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="https://etiennepouget.com/static/css/bootstrap-theme.min.css" />
+        <!-- Bootstrap theme -->
+        <link rel="stylesheet" href="https://etiennepouget.com/static/css/bootstrap.min.css" />
+        <!-- Custom styles for this template -->
+        <link rel="stylesheet" href="https://etiennepouget.com/static/css/custom.css" />
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+        <link href="https://etiennepouget.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="My Blog Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='jquery-ui-slider.css') }}">
+        <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='jquery-ui.min.js') }}"></script>
+
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="../../favicon.ico">
+
+</head>
+
+
+<body>
+{% block content %}
+{% endblock %}
+</body>
