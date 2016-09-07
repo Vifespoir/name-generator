@@ -116,7 +116,10 @@ def show_names():
         number, ageL, ageH = infoDB['number'], infoDB['ageL'], infoDB['ageH']
         session.update(dict(names=names, number=number, ageL=ageL, ageH=ageH))
 
-    return render_template('show_names.html')
+        return render_template('show_names.html')
+    else:
+        flash('No names generated so far...')
+        return redirect(url_for('generate_names'))
 
 
 @app.route('/fr/names/generate', methods=['GET', 'POST'])
@@ -157,7 +160,7 @@ def generate_names():
 
         else:
             amount = 0
-            flash('Please enter a valid amount of name to generate')
+            flash('Please enter a valid amount of names to generate')
 
     return render_template('request.html')
 
