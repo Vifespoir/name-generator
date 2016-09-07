@@ -4,8 +4,8 @@
 {% block request %}
 {% endblock request %}
 
-<div class="container">
-  <div class="panel panel-default">
+<div class=row>
+  <div class="panel panel-default col-xs-12 col-sm-10 col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3">
   {% for name in session['names'] %}
     {% if loop.first %}
     <table class="table table-striped">
