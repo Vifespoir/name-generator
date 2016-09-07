@@ -77,13 +77,7 @@ def close_db(error):
         g.sqlite_db.close()
 
 
-@app.route('/')
-def redirect_to_names():
-    """Display entries from the database."""
-    return redirect(url_for('show_names'))
-
-
-@app.route('/fr/names', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def show_names():
     """Display generated names."""
     db = get_db()
@@ -115,14 +109,13 @@ def show_names():
     if infoDB:
         number, ageL, ageH = infoDB['number'], infoDB['ageL'], infoDB['ageH']
         session.update(dict(names=names, number=number, ageL=ageL, ageH=ageH))
-
         return render_template('show_names.html')
     else:
         flash('No names generated so far...')
         return redirect(url_for('generate_names'))
 
 
-@app.route('/fr/names/generate', methods=['GET', 'POST'])
+@app.route('/fr/names', methods=['GET', 'POST'])
 def generate_names():
     """Generate French names."""
     init_names()
