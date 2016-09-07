@@ -1,67 +1,40 @@
 {% extends "show_names.html" %}
 {% block request %}
-<!-- Special fonts-- >
-<script type="text/javascript">
-  WebFontConfig = {
-    google: { families: [ 'Ubuntu:400,300,500,700,300italic,400italic,500italic,700italic:latin' ] }
-  };
-  (function() {
-    var wf = document.createElement('script');
-    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-    wf.type = 'text/javascript';
-    wf.async = 'true';
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(wf, s);
-  })(); </script>
-
-<!-- Slider bar -->
-<script>
-   $(function() {
-      $( "#slider-3" ).slider({
-         range:true,
-         min: 10,
-         max: 100,
-         values: [ {% if session['ageL'] %} {{session['ageL']}} {% else %} {{35}} {% endif %}, {% if session['ageH'] %} {{session['ageH']}} {% else %} {{60}} {% endif %} ],
-         slide: function( event, ui ) {
-            $( "#age" ).val( ui.values[ 0 ] + " yrs"
-            + " - " + ui.values[ 1 ]+ " yrs" );
-         }
-     });
-   $( "#age" ).val($( "#slider-3" ).slider( "values", 0 ) +
-      " yrs - " + $( "#slider-3" ).slider( "values", 1 ) + " yrs" );
-   });
-</script>
-
-  <form action="{{ url_for('generate_names') }}" method=post class=jumbotron>
-    <table>
-      <tr>
-        <td> How many names do you want to generate? </td>
-        <td> <input name=amount size=30 type=number placeholder="between 1...100" min=1 max=100 value={% if session['number'] %}  {{ session['number'] }} {% endif %}> </td>
-      </tr>
-      <tr>
-        <td> In which age range? </td>
-        <td>
-          <!-- HTML -->
-          <p>
-             <input type="text" name="age" id="age" class="slider-result">
-          </p>
-          <div id="slider-3"></div>
-        </td>
-      </tr>
-      <tr>
-        <td> Turn on for last names to be all-caps: </td>
-        <td>
-          <!-- Rounded switch -->
-          <label class="switch">
-          <input name=lastUPPER id="aria-expanded" value="off" type="checkbox">
-            <div class="slider round"></div>
-          </label>
-        </td>
-      </tr>
-    </table>
-
-    <div class="centered">
-      <button class="btn btn-default" type="submit" value="Submit">Submit</button>
+<form action="{{ url_for('generate_names') }}" method=post class=jumbotron>
+  <div class="row" id=amount>
+    <div class="col-xs-12 col-sm-6 col-lg-4">
+      <label for=amount>How many names do you want to generate?</label>
     </div>
-  </form>
+    <div class="col-xs-12 col-sm-6 col-lg-8">
+      <input id=amount name=amount size=30 type=number placeholder="between 1...100" min=1 max=100 {% if session['number'] %} value={{ session['number'] }} {% endif %}>
+    </div>
+  </div><!-- amount -->
+  <div class="row" id=slider>
+    <div class="col-xs-12 col-sm-6 col-lg-4">
+      <label for="range">In which age range?</label>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-lg-6">
+      <input type=text size=8 id=range name=range>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-offset-6 col-sm-6 col-lg-offset-3 col-lg-5">
+      <p><div id="slider-range"></div></p>
+    </div>
+  </div><!-- slider -->
+  <div class="row" id=case>
+    <div class="col-xs-12 col-sm-6 col-lg-4">
+      <label for=lastUPPER>Check for last names to be all-caps:</label>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-lg-8">
+      <input id=lastUPPER name=lastUPPER value="off" type="checkbox">
+    </div>
+  </div><!-- case -->
+  <div class="col-xs-12 col-sm-10 col-lg-8 col-sm-offset-2 col-lg-offset-4">
+    <button class="btn btn-default" type="submit" value="Submit">Submit</button>
+  </div><!-- submit -->
+</form>
+{% endblock %}
+{% block customjs %}
+{% include 'custom-js.html' %}
 {% endblock %}

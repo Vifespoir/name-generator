@@ -20,7 +20,7 @@ app.config.from_object(__name__)
 app.config.update(dict(
     DATABASE=os.path.join(app.root_path, 'name_generator.db'),
     SECRET_KEY=SECRET_KEY,
-    static_folder='/home/vifespoir/static'
+    static_folder='/static'
 ))
 app.config.from_envvar('NAME_GENERATOR_SETTINGS', silent=True)
 
@@ -127,8 +127,8 @@ def generate_names():
     if request.method == 'POST':
         logging.debug("Generate_names elements posted: %s" % request.form)
 
-        age = request.form['age'].split(' - ')
-        ageL, ageH = int(age[0][:-4]), int(age[1][:-4])
+        age = request.form['range'].split(' - ')
+        ageL, ageH = int(age[0]), int(age[1])
 
         logging.debug("generate_names ages: {} - {}".format(ageL, ageH))
 
