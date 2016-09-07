@@ -6,9 +6,9 @@
     <a id="showGeneratorLink" href="{{ url_for('generate_names') }}">
       <h2>Generate names based on age range given.</h2>
     </a>
-    {% for message in get_flashed_messages() %}
-    <div class="alert alert-success" role="alert">{{ message }}</div>
-    {% endfor %}
+    {% if get_flashed_messages()[-1] %}
+      <div class="alert alert-success" role="alert">{{ get_flashed_messages()[-1] }}</div>
+    {% endif %}
     {% block body %}
     {% endblock %}
   </div>
