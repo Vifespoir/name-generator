@@ -155,7 +155,10 @@ def generate_names():
             amount = 0
             flash('Please enter a valid amount of names to generate')
 
-    return render_template('request.html')
+        return render_template('show_names.html')
+
+    else:
+        return render_template('request.html')
 
 
 if __name__ == "__main__":
