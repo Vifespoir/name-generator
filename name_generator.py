@@ -20,8 +20,7 @@ app.config.from_object(__name__)
 app.config.update(dict(
     DATABASE=os.path.join(app.root_path, 'name_generator.db'),
     SECRET_KEY=SECRET_KEY,
-    USERNAME='admin',
-    PASSWORD='default'
+    static_folder='/home/vifespoir/static'
 ))
 app.config.from_envvar('NAME_GENERATOR_SETTINGS', silent=True)
 
