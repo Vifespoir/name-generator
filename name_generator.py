@@ -112,7 +112,7 @@ def show_names():
         return render_template('show_names.html')
     else:
         flash('No names generated so far...')
-        return redirect(url_for('generate_names'))
+        return render_template('request.html')
 
 
 @app.route('/fr/names', methods=['GET', 'POST'])
@@ -154,9 +154,7 @@ def generate_names():
         else:
             amount = 0
             flash('Please enter a valid amount of names to generate')
-
         return render_template('show_names.html')
-
     else:
         return render_template('request.html')
 
