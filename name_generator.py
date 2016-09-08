@@ -82,18 +82,13 @@ def show_names():
     """Display generated names."""
     db = get_db()
 
-    try:
-        flash('Last request: {} names generated, from {} to {} years-old.'.format(
-            session['number'], session['ageL'], session['ageH']))
-    except KeyError:
-        pass
-
     names = []
+    errors = []
     try:
         cur = db.execute('select firstname, lastname from query order by id desc')
         namesDB = cur.fetchall()
-    except sqlite3.OperationalError:
-        pass
+    except sqlite3.OperationalError as e:
+        errors.append(e)
 
     if namesDB:
         for name in namesDB:
@@ -103,7 +98,8 @@ def show_names():
     try:
         cur = db.execute('select number, ageL, ageH from info order by id desc')
         infoDB = cur.fetchall()
-    except sqlite3.OperationalError:
+    except sqlite3.OperationalError as e:
+        errors.append(e)
         infoDB = []
 
     if infoDB:
@@ -113,7 +109,7 @@ def show_names():
             session['number'], session['ageL'], session['ageH']))
         return render_template('show_names.html')
     else:
-        flash('No names generated so far...')
+        flash('Errors: %s' % errors)
         return render_template('request.html')
 
 
@@ -154,7 +150,8 @@ def generate_names():
                        [amount, ageL, ageH, lastUPPER])
             db.commit()
 
-            flash('New names were successfully generated')
+            flash('Generated {} names from {} to {} years-old'.format(amount, ageL, ageH))
+
             session.update(dict(number=amount, ageL=ageL, ageH=ageH, names=names))
 
         else:
