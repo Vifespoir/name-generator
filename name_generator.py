@@ -96,7 +96,7 @@ def show_names():
             names.append(name)
 
     try:
-        cur = db.execute('select number, ageL, ageH from info order by id desc')
+        cur = db.execute('select nb_names, ageL, ageH, caps from info order by id desc')
         infoDB = cur.fetchall()
     except sqlite3.OperationalError as e:
         errors.append(e)
