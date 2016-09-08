@@ -177,7 +177,7 @@ def generate_names():
 
             session.update(dict(number=amount, ageL=ageL, ageH=ageH, names=names))
 
-            return redirect(url_for('show_names.html'))
+            return redirect(url_for('show_names'))
 
     else:
         return render_template('request.html')
