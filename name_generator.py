@@ -83,7 +83,7 @@ def reroute():
     return redirect(url_for('show_names'))
 
 
-@app.route('/fr', methods=['GET', 'POST'])
+@app.route('/fr/names', methods=['GET', 'POST'])
 def show_names():
     """Display generated names."""
     logging.debug('Fetching names from db...')
@@ -131,7 +131,7 @@ def show_names():
         return render_template('request.html')
 
 
-@app.route('/fr/names', methods=['GET', 'POST'])
+@app.route('/fr/names/generate', methods=['GET', 'POST'])
 def generate_names():
     """Generate French names."""
     init_names()
