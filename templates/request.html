@@ -1,38 +1,41 @@
 {% extends "show_names.html" %}
 {% block request %}
-<form action="{{ url_for('generate_names') }}" method=post class=jumbotron>
+<form action="{{ url_for('generate_names') }}" method=post class="well well-sm" style="max-width:700px">
   <div class="row" id=amount>
-    <div class="col-xs-12 col-sm-6 col-lg-4">
+    <div class="col-xs-12 col-sm-6">
       <label for=amount>How many names do you want to generate?</label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-lg-8">
+    <div class="col-xs-12 col-sm-6">
       <input id=amount name=amount size=30 type=number placeholder="between 1...100" min=1 max=100 {% if session['number'] %} value={{ session['number'] }} {% endif %}>
     </div>
   </div><!-- amount -->
   <div class="row" id=slider>
-    <div class="col-xs-12 col-sm-6 col-lg-4">
+    <div class="col-xs-12 col-sm-6">
       <label for="range">In which age range?</label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-lg-6">
+    <div class="col-xs-12 col-sm-6">
       <input type=text size=8 id=range name=range>
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12 col-sm-offset-6 col-sm-6 col-lg-offset-3 col-lg-5">
+    <div class="col-xs-12 col-sm-offset-6 col-sm-6">
       <p><div id="slider-range"></div></p>
     </div>
   </div><!-- slider -->
   <div class="row" id=case>
-    <div class="col-xs-12 col-sm-6 col-lg-4">
+    <div class="col-xs-12 col-sm-6">
       <label for=lastUPPER>Check for last names to be all-caps:</label>
     </div>
-    <div class="col-xs-12 col-sm-6 col-lg-8">
+    <div class="col-xs-12 col-sm-6">
       <input id=lastUPPER name=lastUPPER value="off" type="checkbox">
     </div>
   </div><!-- case -->
-  <div class="col-xs-12 col-sm-10 col-lg-8 col-sm-offset-2 col-lg-offset-4">
-    <button class="btn btn-default" type="submit" value="Submit">Submit</button>
-  </div><!-- submit -->
+  </br>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-6">
+      <button class="btn btn-success" style="width:200px" type="submit" value="Submit">Submit</button>
+    </div><!-- submit -->
+  </div>
 </form>
 {% endblock %}
 {% block customjs %}

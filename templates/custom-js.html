@@ -4,7 +4,7 @@
 $( function() {
   $( "#slider-range" ).slider({
     range: true,
-    min: 0,
+    min: 15,
     max: 100,
     values: [ {% if session['ageL'] %} {{session['ageL']}} {% else %} {{35}} {% endif %}, {% if session['ageH'] %} {{session['ageH']}} {% else %} {{60}} {% endif %} ],
     slide: function( event, ui ) {

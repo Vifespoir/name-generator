@@ -8,13 +8,20 @@
       Generate names
     </a>
   </div>
-  </br>
   {% if get_flashed_messages()[-1] %}
   <div class="alert alert-success" style="max-width:700px" role="alert">
+    <button type="button" class="close" data-dismiss="alert"></button>
     {{ get_flashed_messages()[-1] }}
   </div>
   {% endif %}
   {% block body %}
   {% endblock %}
 </div>
+<script type="text/javascript">
+  window.setTimeout(function () {
+    $(".alert-success").fadeTo(500, 0).slideUp(250, function () {
+        $(this).remove();
+    });
+  }, 3000);
+</script>
 {% endblock %}

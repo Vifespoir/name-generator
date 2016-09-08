@@ -177,13 +177,7 @@ def generate_names():
 
             session.update(dict(number=amount, ageL=ageL, ageH=ageH, names=names))
 
-            return render_template('request.html')
-
-        else:
-            logging.debug('POST form error')
-            amount = 0
-            flash('Please enter a valid amount of names to generate')
-            return render_template('request.html')
+            return render_template('show_names.html')
 
     else:
         return render_template('request.html')
