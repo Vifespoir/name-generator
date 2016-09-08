@@ -125,7 +125,6 @@ def show_names():
         return render_template('show_names.html')
 
     else:
-        flash('Errors: %s' % errors)
         logging.debug('No former request found, rendering request.html')
 
         return render_template('request.html')
