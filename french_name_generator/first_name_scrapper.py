@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 from french_name_generator.request_handling import html_fr_source
 from french_name_generator.log_methods import ItemLogger
 import logging
-from french_name_generator.scrap_magicmaman import NameStatistics
+from french_name_generator.scrap_statistics import NameStatistics
 # soup = BeautifulSoup(html_source, 'html.parser')
 
 

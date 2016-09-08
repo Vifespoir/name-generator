@@ -1,5 +1,5 @@
 #!python3
-"""This script will scrap magicmaman to get statistics on 1st names."""
+"""This script will scrap to get statistics on 1st names."""
 
 import requests
 from bs4 import BeautifulSoup
@@ -7,6 +7,7 @@ import json
 from time import sleep
 from random import randint
 import logging
+from constant import post_url
 
 logging.basicConfig(
     level=logging.DEBUG, format=' %(asctime)s - %(levelname)s - %(message)s')
@@ -14,8 +15,6 @@ logging.basicConfig(
 
 class NameStatistics():
     """A class to scrap name statistics."""
-
-    post_url = 'http://www.magicmaman.com/direct/recherche/prenom'
 
     def __init__(self, namesD):
         """Initialize NameStatistics."""

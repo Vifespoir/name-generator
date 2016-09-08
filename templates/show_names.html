@@ -4,32 +4,30 @@
 {% block request %}
 {% endblock request %}
 
-<div class=row>
-  <div class="panel panel-default col-xs-12 col-sm-10 col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3">
-  {% for name in session['names'] %}
-    {% if loop.first %}
-    <table class="table table-striped">
-      <tr>
-        <th>First Name</th>
-        <th>Last Name</th>
-      </tr>
-      <tr>
-        <td>{{ name[0] }}</td>
-        <td>{{ name[1] }}</td>
-      </tr>
-    {% elif loop.last %}
-      <tr>
-        <td>{{ name[0] }}</td>
-        <td>{{ name[1] }}</td>
-      </tr>
-    </table>
-    {% else %}
-      <tr>
-        <td>{{ name[0] }}</td>
-        <td>{{ name[1] }}</td>
-      </tr>
-    {% endif %}
-  </div>
+<div class="panel panel-default" style="max-width:700px">
+{% for name in session['names'] %}
+  {% if loop.first %}
+  <table class="table table-striped">
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+    </tr>
+    <tr>
+      <td>{{ name[0] }}</td>
+      <td>{{ name[1] }}</td>
+    </tr>
+  {% elif loop.last %}
+    <tr>
+      <td>{{ name[0] }}</td>
+      <td>{{ name[1] }}</td>
+    </tr>
+  </table>
+  {% else %}
+    <tr>
+      <td>{{ name[0] }}</td>
+      <td>{{ name[1] }}</td>
+    </tr>
+  {% endif %}
 </div>
 {% endfor %}
 {% endblock body %}
