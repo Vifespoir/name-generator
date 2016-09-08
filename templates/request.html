@@ -1,5 +1,5 @@
-{% extends "show_names.html" %}
-{% block request %}
+{% extends "home.html" %}
+{% block body %}
 <form action="{{ url_for('generate_names') }}" method=post class="well well-sm" style="max-width:700px">
   <div class="row" id=amount>
     <div class="col-xs-12 col-sm-6">
@@ -37,7 +37,7 @@
     </div><!-- submit -->
   </div>
 </form>
-{% endblock %}
+{% endblock body %}
 {% block customjs %}
 {% include 'custom-js.html' %}
-{% endblock %}
+{% endblock customjs %}

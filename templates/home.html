@@ -2,12 +2,6 @@
 {% block content %}
 <div class=jumbotron>
   <h1>French Name Generator</h1>
-  <div class="well well-sm" style="max-width:700px">
-    <h3>This application generates names based on a given age range.</h3>
-    <a class="btn btn-block btn-info center-block" style="width:200px" href="{{ url_for('generate_names') }}" role="button">
-      Generate names
-    </a>
-  </div>
   {% if get_flashed_messages()[-1] %}
   <div class="alert alert-success" style="max-width:700px" role="alert">
     {{ get_flashed_messages()[-1] }}
