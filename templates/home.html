@@ -3,9 +3,8 @@
 <div class=jumbotron>
   <h1>French Name Generator</h1>
   <div class=nav>
-    <a id="showGeneratorLink" href="{{ url_for('generate_names') }}">
-      <h2>Generate names based on age range given.</h2>
-    </a>
+    <h2>This application generate names based on a given age range.</h2>
+    <a class="btn btn-info center-block" href="{{ url_for('generate_names') }}" role="button">Generate names</a>
     {% if get_flashed_messages()[-1] %}
       <div class="alert alert-success" role="alert">{{ get_flashed_messages()[-1] }}</div>
     {% endif %}
