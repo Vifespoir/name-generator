@@ -150,6 +150,10 @@ def generate_names():
                            [name[0], name[1]])
                 db.commit()
 
+            db.execute('insert into info (nb_names, ageL, ageH, caps) values (?, ?, ?, ?)',
+                       [amount, ageL, ageH, lastUPPER])
+            db.commit()
+
             flash('New names were successfully generated')
             session.update(dict(number=amount, ageL=ageL, ageH=ageH, names=names))
 
