@@ -109,6 +109,8 @@ def show_names():
     if infoDB:
         number, ageL, ageH = infoDB['number'], infoDB['ageL'], infoDB['ageH']
         session.update(dict(names=names, number=number, ageL=ageL, ageH=ageH))
+        flash('{} names generated so far from {} to {} years-old'.format(
+            session['number'], session['ageL'], session['ageH']))
         return render_template('show_names.html')
     else:
         flash('No names generated so far...')
